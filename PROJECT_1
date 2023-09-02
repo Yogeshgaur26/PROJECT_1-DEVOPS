@@ -39,4 +39,21 @@ def main():
             print(f"Player chose {player_choice}.")
             print(f"Computer chose {computer_choice}.")
             print(determine_winner(player_choice, computer_choice))
+             elif mode == "computer vs. player":
+            player_choice = get_player_choice()
+            computer_choice = get_computer_choice()
+            print(f"Player chose {player_choice}.")
+            print(f"Computer chose {computer_choice}.")
+            print(determine_winner(player_choice, computer_choice))
+        elif mode == "player vs. player":
+            player1_choice = get_player_choice()
+            player2_choice = get_player_choice()
+            print(f"Player 1 chose {player1_choice}.")
+            print(f"Player 2 chose {player2_choice}.")
+            print(determine_winner(player1_choice, player2_choice))
+        else:
+            print("Invalid mode. Please choose a valid mode.")
+
+if _name_ == "_main_":
+    main()
 
