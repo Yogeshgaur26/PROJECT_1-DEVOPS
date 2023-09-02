@@ -1,70 +1,105 @@
-import random
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #result {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #choices {
+            display: flex;
+            justify-content: center;
+        }
+        .choice {
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        .choice:hover {
+            transform: scale(1.1);
+        }
+        #score {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div id="game-container">
+        <p>Make your choice:</p>
+        <div id="choices">
+            <div class="choice" id="rock">Rock</div>
+            <div class="choice" id="paper">Paper</div>
+            <div class="choice" id="scissors">Scissors</div>
+        </div>
+        <p id="result"></p>
+        <p id="score">Player: 0 | Computer: 0</p>
+    </div>
 
-def get_player_choice():
-    while True:
-        player_choice = input("Enter your choice (rock, paper, or scissors): ").lower()
-        if player_choice in ["rock", "paper", "scissors"]:
-            return player_choice
-        else:
-            print("Invalid choice. Please enter rock, paper, or scissors.")
+    <script>
+        const choices = ["rock", "paper", "scissors"];
+        let playerScore = 0;
+        let computerScore = 0;
 
-def get_computer_choice():
-    return random.choice(["rock", "paper", "scissors"])
-def determine_winner(player_choice, computer_choice):
-    if player_choice == computer_choice:
-        return "It's a tie!"
-    elif (
-        (player_choice == "rock" and computer_choice == "scissors")
-        or (player_choice == "paper" and computer_choice == "rock")
-        or (player_choice == "scissors" and computer_choice == "paper")
-    ):
-        return "Player wins!"
-    else:
-        return "Computer wins!"
-def main():
-    print("Welcome to Rock, Paper, Scissors!")
-    while True:
-        mode = input("Choose a mode (computer vs. computer, computer vs. player, player vs. player, or quit): ").lower()
-        if mode == "quit":
-            break
-        elif mode == "computer vs. computer":
-            computer1_choice = get_computer_choice()
-            computer2_choice = get_computer_choice()
-            print(f"Computer 1 chose {computer1_choice}.")
-            print(f"Computer 2 chose {computer2_choice}.")
-            print(determine_winner(computer1_choice, computer2_choice))
-            elif mode == "player vs. player":
-            player1_choice = get_player_choice()
-            player2_choice = get_player_choice()
-            print(f"Player 1 chose {player1_choice}.")
-            print(f"Player 2 chose {player2_choice}.")
-            print(determine_winner(player1_choice, player2_choice))
-        else:
-            print("Invalid mode. Please choose a valid mode.")
+        function computerChoice() {
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
 
-if _name_ == "_main_":
-    main()
-        elif mode == "computer vs. player":
-            player_choice = get_player_choice()
-            computer_choice = get_computer_choice()
-            print(f"Player chose {player_choice}.")
-            print(f"Computer chose {computer_choice}.")
-            print(determine_winner(player_choice, computer_choice))
-             elif mode == "computer vs. player":
-            player_choice = get_player_choice()
-            computer_choice = get_computer_choice()
-            print(f"Player chose {player_choice}.")
-            print(f"Computer chose {computer_choice}.")
-            print(determine_winner(player_choice, computer_choice))
-        elif mode == "player vs. player":
-            player1_choice = get_player_choice()
-            player2_choice = get_player_choice()
-            print(f"Player 1 chose {player1_choice}.")
-            print(f"Player 2 chose {player2_choice}.")
-            print(determine_winner(player1_choice, player2_choice))
-        else:
-            print("Invalid mode. Please choose a valid mode.")
+        function playGame(playerChoice) {
+            const computer = computerChoice();
+            const result = getResult(playerChoice, computer);
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `You chose ${playerChoice}. Computer chose ${computer}. ${result}`;
+            updateScore(result);
+        }
 
-if _name_ == "_main_":
-    main()
+        function getResult(player, computer) {
+            if (player === computer) return "It's a tie!";
+            if ((player === "rock" && computer === "scissors") ||
+                (player === "paper" && computer === "rock") ||
+                (player === "scissors" && computer === "paper")) {
+                return "You win!";
+            } else {
+                return "Computer wins!";
+            }
+        }
 
+        function updateScore(result) {
+            const scoreElement = document.getElementById("score");
+            if (result === "You win!") {
+                playerScore++;
+            } else if (result === "Computer wins!") {
+                computerScore++;
+            }
+            scoreElement.textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+        }
+
+        const choiceButtons = document.querySelectorAll(".choice");
+        choiceButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const playerChoice = button.id;
+                playGame(playerChoice);
+            });
+        });
+    </script>
+</body>
+</html>
