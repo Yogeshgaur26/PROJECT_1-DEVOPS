@@ -41,3 +41,65 @@
         }
     </style>
 </head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div id="game-container">
+        <p>Make your choice:</p>
+        <div id="choices">
+            <div class="choice" id="rock">Rock</div>
+            <div class="choice" id="paper">Paper</div>
+            <div class="choice" id="scissors">Scissors</div>
+        </div>
+        <p id="result"></p>
+        <p id="score">Player: 0 | Computer: 0</p>
+    </div>
+
+    <script>
+        const choices = ["rock", "paper", "scissors"];
+        let playerScore = 0;
+        let computerScore = 0;
+
+        function computerChoice() {
+            const randomIndex = Math.floor(Math.random() * 3);
+            return choices[randomIndex];
+        }
+
+        function playGame(playerChoice) {
+            const computer = computerChoice();
+            const result = getResult(playerChoice, computer);
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `You chose ${playerChoice}. Computer chose ${computer}. ${result}`;
+            updateScore(result);
+        }
+
+        function getResult(player, computer) {
+            if (player === computer) return "It's a tie!";
+            if ((player === "rock" && computer === "scissors") ||
+                (player === "paper" && computer === "rock") ||
+                (player === "scissors" && computer === "paper")) {
+                return "You win!";
+            } else {
+                return "Computer wins!";
+            }
+        }
+
+        function updateScore(result) {
+            const scoreElement = document.getElementById("score");
+            if (result === "You win!") {
+                playerScore++;
+            } else if (result === "Computer wins!") {
+                computerScore++;
+            }
+            scoreElement.textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+        }
+
+        const choiceButtons = document.querySelectorAll(".choice");
+        choiceButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const playerChoice = button.id;
+                playGame(playerChoice);
+            });
+        });
+    </script>
+</body>
+</html>
